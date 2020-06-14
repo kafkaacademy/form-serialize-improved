@@ -1,3 +1,6 @@
+# 0.7.7 (2020-06-14)
+* README improved
+
 # 0.7.6 (2020-06-14)
 * support for checkbox added 2
 

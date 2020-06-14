@@ -1,6 +1,6 @@
 {
   "name": "form-serialize-improved",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "serialize html forms",
   "main": "index.js",
   "directories": {
