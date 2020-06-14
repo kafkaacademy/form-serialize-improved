@@ -5,7 +5,7 @@ serialize form fields to submit a form over ajax
 ## install
 
 ```shell
-npm install form-serialize
+npm install form-serialize-improved
 ```
 
 ## use
