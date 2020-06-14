@@ -2,7 +2,7 @@
 
 some improvements on number and checkbox input fields, compared to form-serialize
 
-serialize form fields to submit a form over ajax
+serialize form fields to submit a form 
 
 ## install
 
