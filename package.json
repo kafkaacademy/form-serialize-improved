@@ -1,6 +1,6 @@
 {
   "name": "form-serialize",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "serialize html forms",
   "main": "index.js",
   "directories": {
@@ -16,15 +16,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/shtylman/form-serialize.git"
+    "url": "https://github.com/Kafka-Academy/form-serialize-improved.git"
   },
   "keywords": [
     "form",
     "serialize"
   ],
-  "author": "Roman Shtylman <shtylman@gmail.com>",
+  "author": "Herbrand Hofker <herbrand@kafka.academy>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shtylman/form-serialize/issues"
+    "url": "https://github.com/Kafka-Academy/form-serialize/issues"
   }
 }
