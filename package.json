@@ -1,6 +1,6 @@
 {
   "name": "form-serialize-improved",
-  "version": "0.7.3",
+  "version": "0.7.6",
   "description": "serialize html forms",
   "main": "index.js",
   "directories": {
@@ -19,5 +19,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Kafka-Academy/form-serialize/issues"
+  },
+  "devDependencies": {
+    "domify": "^1.4.0"
   }
 }

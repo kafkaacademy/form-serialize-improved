@@ -1,5 +1,13 @@
-# 0.7.3 (2020-06-14)
+# 0.7.6 (2020-06-14)
+* support for checkbox added 2
 
+# 0.7.5 (2020-06-14)
+* support for checkbox added
+
+# 0.7.4 (2020-06-14)
+* changed way of exporting "serialize"function
+
+# 0.7.3 (2020-06-14)
 * input number field is now number (was a string)
 
 # 0.7.2 (2017-06-11)

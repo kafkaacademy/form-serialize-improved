@@ -1,4 +1,6 @@
-# form-serialize [![Build Status](https://travis-ci.org/defunctzombie/form-serialize.png?branch=master)](https://travis-ci.org/defunctzombie/form-serialize)
+# form-serialize-improved 
+
+some improvements on number and checkbox input fields, compared to form-serialize
 
 serialize form fields to submit a form over ajax
 

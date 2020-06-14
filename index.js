@@ -22,7 +22,7 @@ var brackets = /(\[[^\[\]]*\])/g;
 //    hash and url encoded str serializers are provided with this module
 //    - disabled: [true | false]. If true serialize disabled fields.
 //    - empty: [true | false]. If true serialize empty fields
-function serialize(form, options) {
+export function serialize(form, options) {
     if (typeof options != 'object') {
         options = { hash: !!options };
     }
@@ -38,7 +38,7 @@ function serialize(form, options) {
     //Object store each radio and set if it's empty or not
     var radio_store = Object.create(null);
 
-    for (var i=0 ; i<elements.length ; ++i) {
+    for (var i = 0; i < elements.length; ++i) {
         var element = elements[i];
 
         // ingore disabled fields
@@ -54,13 +54,30 @@ function serialize(form, options) {
         var key = element.name;
         var val = element.value;
         var type = element.type;
-        if (type=='number' && val!=undefined)
-             val=Number(val);
-       
+        if (type === 'number' && val != undefined)
+            val = Number(val);
+        if (type === 'checkbox') {
+            if (!element.checked) 
+                val=undefined;
+            else{
+                let keys = parse_keys(key);
+                let prop = undefined;
+                if (keys.length == 1) {
+                    prop = keys[0];
+                }
+                else {
+                    prop = keys[keys.length - 1];
+                    prop = prop.replace('[', '');
+                    prop = prop.replace(']', '');
+                }
+                val = prop;
+            }
+        }
+
 
         // we can't just use element.value for checkboxes cause some browsers lie to us
         // they say "on" for value when the box isn't checked
-        if ((element.type === 'checkbox' || element.type === 'radio') && !element.checked) {
+        if ((element.type === 'radio') && !element.checked) {
             val = undefined;
         }
 
@@ -99,7 +116,7 @@ function serialize(form, options) {
 
             var selectOptions = element.options;
             var isSelectedOptions = false;
-            for (var j=0 ; j<selectOptions.length ; ++j) {
+            for (var j = 0; j < selectOptions.length; ++j) {
                 var option = selectOptions[j];
                 var allowedEmpty = options.empty && !option.value;
                 var hasValue = (option.value || allowedEmpty);
@@ -237,7 +254,7 @@ function hash_serializer(result, key, value) {
         // assignment could go through `hash_assign`.
         if (existing) {
             if (!Array.isArray(existing)) {
-                result[key] = [ existing ];
+                result[key] = [existing];
             }
 
             result[key].push(value);
@@ -261,4 +278,3 @@ function str_serialize(result, key, value) {
     return result + (result ? '&' : '') + encodeURIComponent(key) + '=' + value;
 }
 
-module.exports = serialize;
