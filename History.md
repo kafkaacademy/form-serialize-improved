@@ -1,3 +1,7 @@
+# 0.7.3 (2020-06-14)
+
+* input number field is now number (was a string)
+
 # 0.7.2 (2017-06-11)
 
 * Serialize properly radio input with empty value (1b7a042)
