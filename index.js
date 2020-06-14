@@ -53,6 +53,10 @@ function serialize(form, options) {
 
         var key = element.name;
         var val = element.value;
+        var type = element.type;
+        if (type=='number' && val!=undefined)
+             val=Number(val);
+       
 
         // we can't just use element.value for checkboxes cause some browsers lie to us
         // they say "on" for value when the box isn't checked
