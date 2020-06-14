@@ -1,5 +1,5 @@
 {
-  "name": "form-serialize",
+  "name": "form-serialize-improved",
   "version": "0.7.3",
   "description": "serialize html forms",
   "main": "index.js",
