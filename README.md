@@ -1,8 +1,16 @@
 # form-serialize-improved 
 
-some improvements on number and checkbox input fields, compared to form-serialize
-
 serialize form fields to submit a form 
+
+Some improvements compared to [form-serialize](https://www.npmjs.com/package/form-serialize) (forked from there) 
+
+The improvements:
+
+1. number input fields now give a number and not a string
+
+2. checkbox input fields behave now as stated in [Mozilla standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
+
+
 
 ## install
 
