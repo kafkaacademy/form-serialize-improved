@@ -6,14 +6,7 @@
   "directories": {
     "test": "test"
   },
-  "devDependencies": {
-    "domify": "^1.4.0",
-    "zuul": "^3.12.0"
-  },
-  "scripts": {
-    "test": "zuul -- test/index.js",
-    "test-local": "zuul --local -- test/index.js"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Kafka-Academy/form-serialize-improved.git"
@@ -22,7 +15,7 @@
     "form",
     "serialize"
   ],
-  "author": "Herbrand Hofker <herbrand@kafka.academy>",
+  "author": "Herbrand Hofker <herbrand@kafka.academy> www.kafka.academy",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Kafka-Academy/form-serialize/issues"
