@@ -1,14 +1,7 @@
-# 0.7.7 (2020-06-14)
-* README improved
+# 0.8.0 (2020-06-15)
+testing added , also against mdn standards
+now JEST is used 
 
-# 0.7.6 (2020-06-14)
-* support for checkbox added 2
-
-# 0.7.5 (2020-06-14)
-* support for checkbox added
-
-# 0.7.4 (2020-06-14)
-* changed way of exporting "serialize"function
 
 # 0.7.3 (2020-06-14)
 * input number field is now number (was a string)

@@ -22,7 +22,7 @@ var brackets = /(\[[^\[\]]*\])/g;
 //    hash and url encoded str serializers are provided with this module
 //    - disabled: [true | false]. If true serialize disabled fields.
 //    - empty: [true | false]. If true serialize empty fields
-export function serialize(form, options) {
+function serialize(form, options) {
     if (typeof options != 'object') {
         options = { hash: !!options };
     }
@@ -55,29 +55,12 @@ export function serialize(form, options) {
         var val = element.value;
         var type = element.type;
         if (type === 'number' && val != undefined)
-            val = Number(val);
-        if (type === 'checkbox') {
-            if (!element.checked) 
-                val=undefined;
-            else{
-                let keys = parse_keys(key);
-                let prop = undefined;
-                if (keys.length == 1) {
-                    prop = keys[0];
-                }
-                else {
-                    prop = keys[keys.length - 1];
-                    prop = prop.replace('[', '');
-                    prop = prop.replace(']', '');
-                }
-                val = prop;
-            }
-        }
+            val = Number(val);     
 
 
         // we can't just use element.value for checkboxes cause some browsers lie to us
         // they say "on" for value when the box isn't checked
-        if ((element.type === 'radio') && !element.checked) {
+        if ((element.type === 'checkbox' || element.type === 'radio') && !element.checked) {
             val = undefined;
         }
 
@@ -269,12 +252,18 @@ function hash_serializer(result, key, value) {
 
 // urlform encoding serializer
 function str_serialize(result, key, value) {
-    // encode newlines as \r\n cause the html spec says so
-    value = value.replace(/(\r)?\n/g, '\r\n');
-    value = encodeURIComponent(value);
+    if( typeof value ==='string'){
+      value = value.replace(/(\r)?\n/g, '\r\n');
+      value = encodeURIComponent(value);
 
-    // spaces should be '+' rather than '%20'.
-    value = value.replace(/%20/g, '+');
+      // spaces should be '+' rather than '%20'.
+      value = value.replace(/%20/g, '+');
+    }
+  
     return result + (result ? '&' : '') + encodeURIComponent(key) + '=' + value;
 }
 
+
+
+
+module.exports = serialize;
