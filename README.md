@@ -8,7 +8,7 @@ The improvements:
 
 1. number input fields now give a number and not a string
 
-2. checkbox input fields behave now as stated in [Mozilla standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
+2. checkbox input fields are checked against standards: [Mozilla standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
 
 
 
