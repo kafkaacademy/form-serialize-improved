@@ -10,7 +10,7 @@ The improvements:
 
 2. checkbox input fields are checked against standards: [Mozilla standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
 
-
+3. 100% coverage in the tests
 
 ## install
 
