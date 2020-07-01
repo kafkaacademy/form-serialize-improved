@@ -56,18 +56,21 @@ function serialize(form, options) {
         let val = element.value;
 
         // If we do not want empty elements
-        if (!options.empty && (!val)) {
+        if (!(options.empty || options.booleans) && !val)
             continue;
-        }
+
 
         switch (type) {
-            case 'number': {
-                if (val != undefined)
-                    val = Number(val);
-                break;
-            }
-            case 'checkbox':
+            case 'checkbox':          
+                if (options.booleans) {
+                    if (element.indeterminate)
+                        val = undefined;
+                    else
+                        val = (element.checked);
+                    break;
+                }
             case 'radio':
+             
                 // we can't just use element.value for checkboxes cause some browsers lie to us
                 // they say "on" for value when the box isn't checked
                 if (!element.checked) {
@@ -91,10 +94,19 @@ function serialize(form, options) {
                         continue;
                     }
                 }
+                if (!options.empty && (!val))
+                continue;
+
                 break;
+            case 'number': {
+                if (val != undefined)
+                    val = Number(val);
+                break;
+            }
 
             // multi select boxes
             case 'select-multiple': {
+           
                 val = [];
 
                 const selectOptions = element.options;
@@ -124,7 +136,7 @@ function serialize(form, options) {
                     result = serializer(result, key, '');
                 }
             }
-            continue;
+                continue;
         }
 
         result = serializer(result, key, val);
