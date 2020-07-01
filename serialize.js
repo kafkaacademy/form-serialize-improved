@@ -59,8 +59,13 @@ function serialize(form, options) {
         if (!(options.empty || options.booleans) && !val)
             continue;
 
+          
 
         switch (type) {
+            case 'text':  break;
+            case 'textarea':  break;
+            case 'email':  break;
+            case 'select-one':  break;
             case 'checkbox':          
                 if (options.booleans) {
                     if (element.indeterminate)
@@ -93,10 +98,7 @@ function serialize(form, options) {
                     if (val == undefined) {
                         continue;
                     }
-                }
-                if (!options.empty && (!val))
-                continue;
-
+                }            
                 break;
             case 'number': {
                 if (val != undefined)
@@ -136,6 +138,8 @@ function serialize(form, options) {
                     result = serializer(result, key, '');
                 }
             }
+            continue;
+           default: console.log(type);
                 continue;
         }
 

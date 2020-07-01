@@ -19,6 +19,10 @@ const empty_check_hash = (form, exp) =>{
  expect(serialize(form, { hash : true, disabled: true, empty: true })).toEqual(exp);
 };
 
+const boolean_check_hash = (form, exp) =>{
+  expect(serialize(form, { hash : true, disabled: true, booleans: true })).toEqual(exp);
+ };
+
 const empty_check =(form, exp) =>{
   expect(serialize(form, { hash : false, disabled: true, empty: true })).toEqual( exp);
 };
@@ -28,6 +32,7 @@ test('null form', ()=> {
   str_check(null, '');
   empty_check(null, '');
   empty_check_hash(null, {}); 
+  boolean_check_hash(null, {}); 
 });
 
 test('bad form', ()=> {
@@ -36,6 +41,7 @@ test('bad form', ()=> {
   str_check(form, '');
   empty_check(form, '');
   empty_check_hash(form, {});
+  boolean_check_hash(form, {});
 });
 
 test('empty form', ()=> {
@@ -44,6 +50,7 @@ test('empty form', ()=> {
   str_check(form, '');
   empty_check(form, '');
   empty_check_hash(form, {});
+  boolean_check_hash(form, {});
 });
 
 // basic form with single input
@@ -57,6 +64,9 @@ test('single element', ()=> {
   empty_check_hash(form, {
       'foo': 'bar'
   });
+  boolean_check_hash(form, {
+    'foo': 'bar'
+});
 });
 
 test('single element number', ()=> {
@@ -69,6 +79,9 @@ test('single element number', ()=> {
   empty_check_hash(form, {
       'anummber': 123
   });
+  boolean_check_hash(form, {
+    'anummber': 123
+})
 });
 
 test('ignore no value', ()=> {
@@ -83,6 +96,9 @@ test('do not ignore no value when empty option', ()=> {
   empty_check_hash(form, {
       'foo': ''
   });
+  boolean_check_hash(form, {
+    'foo': ''
+});
 });
 
 test('multi inputs', ()=> {
@@ -124,6 +140,10 @@ test('handle disabled and empty', ()=> {
       'foo': '',
       'foo.bar': ''
   });
+  boolean_check_hash(form, {
+    'foo': '',
+    'foo.bar': ''
+});
 });
 
 test('ignore buttons', ()=> {
@@ -154,6 +174,11 @@ test('checkboxes', ()=> {
       'bar': '',
       'baz': 'on'
   });
+  boolean_check_hash(form, {
+    'foo': true,
+    'bar': false,
+    'baz': true
+});
 });
 
 test('checkboxes - array', ()=> {
@@ -170,6 +195,9 @@ test('checkboxes - array', ()=> {
   empty_check_hash(form, {
       'foo': ['bar', 'baz', '']
   });
+  boolean_check_hash(form, {
+    'foo': [true, true, false]
+});
 });
 
 
@@ -212,6 +240,9 @@ test('select - single - empty', function () {
   empty_check_hash(form, {
       'foo': ''
   });
+  boolean_check_hash(form, {
+    'foo': ''
+});
 });
 
 test('select - multiple', ()=> {
@@ -244,6 +275,9 @@ test('select - multiple - empty', ()=> {
   empty_check_hash(form, {
       'foo': ''
   });
+  boolean_check_hash(form, {
+    'foo': ''
+});
 });
 
 test('radio - no default', ()=> {
@@ -256,7 +290,11 @@ test('radio - no default', ()=> {
   empty_check(form, 'foo=');
   empty_check_hash(form, {
       'foo':''
-  });
+  }); 
+ /* boolean_check_hash(form, {
+    'foo':''
+}); 
+*/ 
 });
 
 test('radio - single default', ()=> {
@@ -272,6 +310,9 @@ test('radio - single default', ()=> {
   empty_check_hash(form, {
       foo: 'bar1'
   });
+  boolean_check_hash(form, {
+    foo: 'bar1'
+});
 });
 
 test('radio - empty value', ()=> {
@@ -285,6 +326,9 @@ test('radio - empty value', ()=> {
   empty_check_hash(form, {
       'foo':''
   });
+  boolean_check_hash(form, {
+    'foo':''
+});
 });
 
 // in this case the radio buttons and checkboxes share a name key
@@ -347,6 +391,18 @@ test('bracket notation - hashes', ()=> {
           }
       }
   });
+
+  boolean_check_hash(form, {
+    account: {
+        name: 'Foo Dude',
+        email: 'foobar@example.org',
+        address: {
+            city: 'Qux',
+            state: 'CA',
+            empty: ''
+        }
+    }
+});
 });
 
 
@@ -373,6 +429,15 @@ test('bracket notation - hashes with a digit as the first symbol in a key', ()=>
           }
       }
   });
+
+  boolean_check_hash(form, {
+    'somekey': {
+        '123abc': {
+            'first': 'first_value',
+            'second': 'second_value'
+        }
+    }
+});
 });
 
 
@@ -443,6 +508,16 @@ test('bracket notation - select multiple, empty values', ()=> {
           bar: [ 'Default value', '', 'baz', 'norf' ]
       }
   });
+
+  /*
+  boolean_check_hash(form, {
+    foo: {
+        bar: [ 'Default value', '', 'baz', 'norf' ]
+    }
+});
+
+*/
+
 });
 
 test('bracket notation - non-indexed arrays', ()=> {
