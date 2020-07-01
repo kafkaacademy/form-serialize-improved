@@ -30,13 +30,14 @@ function serialize(form, options) {
         options.hash = true;
     }
 
-    let result = (options.hash) ? {} : '';
     const serializer = options.serializer || ((options.hash) ? hash_serializer : str_serialize);
 
     const elements = form && form.elements ? form.elements : [];
 
     //Object store each radio and set if it's empty or not
     const radio_store = Object.create(null);
+
+    let result = (options.hash) ? {} : '';
 
     for (const element of elements) {
 
@@ -54,77 +55,76 @@ function serialize(form, options) {
         const type = element.type;
         let val = element.value;
 
-        //  switch(expression) {
-
-        if (type === 'number' && val != undefined)
-            val = Number(val);
-
-
-        // we can't just use element.value for checkboxes cause some browsers lie to us
-        // they say "on" for value when the box isn't checked
-        if ((type === 'checkbox' || type === 'radio') && !element.checked) {
-            val = undefined;
-        }
 
         // If we do not want empty elements
         if (!options.empty && (!val)) {
             continue;
         }
 
-        // for checkbox
-        if (element.type === 'checkbox' && !element.checked) {
-            val = '';
-        }
-
-        // for radio
-        if (element.type === 'radio') {
-            if (!radio_store[key] && !element.checked) {
-                radio_store[key] = false;
+        switch (type) {
+            case 'number': {
+                if (val != undefined)
+                    val = Number(val);
+                break;
             }
-            else if (element.checked) {
-                radio_store[key] = true;
-            }
-        }
-
-        // if options empty is true, continue only if its radio
-        if (val == undefined && type == 'radio') {
-            continue;
-        }
-
-
-        // multi select boxes
-        if (element.type === 'select-multiple') {
-            val = [];
-
-            var selectOptions = element.options;
-            var isSelectedOptions = false;
-            for (var j = 0; j < selectOptions.length; ++j) {
-                var option = selectOptions[j];
-                var allowedEmpty = options.empty && !option.value;
-                var hasValue = (option.value || allowedEmpty);
-                if (option.selected && hasValue) {
-                    isSelectedOptions = true;
-
-                    // If using a hash serializer be sure to add the
-                    // correct notation for an array in the multi-select
-                    // context. Here the name attribute on the select element
-                    // might be missing the trailing bracket pair. Both names
-                    // "foo" and "foo[]" should be arrays.
-                    if (options.hash && key.slice(key.length - 2) !== '[]') {
-                        result = serializer(result, key + '[]', option.value);
+            case 'checkbox':
+            case 'radio':  // we can't just use element.value for checkboxes cause some browsers lie to us
+                // they say "on" for value when the box isn't checked
+                if (!element.checked) {
+                    val = undefined;
+                    if (!options.empty) continue;
+                }
+                // for checkbox
+                if (type === 'checkbox' && !element.checked) {
+                    val = '';
+                }
+                // for radio
+                if (type === 'radio') {
+                    if (!radio_store[key] && !element.checked) {
+                        radio_store[key] = false;
                     }
-                    else {
-                        result = serializer(result, key, option.value);
+                    else if (element.checked) {
+                        radio_store[key] = true;
                     }
                 }
-            }
+                // if options empty is true, continue only if its radio
+                if (val == undefined && type == 'radio') {
+                    continue;
+                }
+                break;
 
-            // Serialize if no selected options and options.empty is true
-            if (!isSelectedOptions && options.empty) {
-                result = serializer(result, key, '');
-            }
+            // multi select boxes
+            case 'select-multiple': {
+                val = [];
 
-            continue;
+                const selectOptions = element.options;
+                let isSelectedOptions = false;
+                for (let option of selectOptions) {
+                    const allowedEmpty = options.empty && !option.value;
+                    const hasValue = (option.value || allowedEmpty);
+                    if (option.selected && hasValue) {
+                        isSelectedOptions = true;
+
+                        // If using a hash serializer be sure to add the
+                        // correct notation for an array in the multi-select
+                        // context. Here the name attribute on the select element
+                        // might be missing the trailing bracket pair. Both names
+                        // "foo" and "foo[]" should be arrays.
+                        if (options.hash && key.slice(key.length - 2) !== '[]') {
+                            result = serializer(result, key + '[]', option.value);
+                        }
+                        else {
+                            result = serializer(result, key, option.value);
+                        }
+                    }
+                }
+
+                // Serialize if no selected options and options.empty is true
+                if (!isSelectedOptions && options.empty) {
+                    result = serializer(result, key, '');
+                }
+            }
+                continue;
         }
 
         result = serializer(result, key, val);
@@ -209,7 +209,6 @@ function hash_assign(result, keys, value) {
             result[index] = hash_assign(result[index], keys, value);
         }
     }
-
     return result;
 }
 
@@ -245,7 +244,6 @@ function hash_serializer(result, key, value) {
             result[key] = value;
         }
     }
-
     return result;
 }
 
@@ -261,8 +259,5 @@ function str_serialize(result, key, value) {
 
     return result + (result ? '&' : '') + encodeURIComponent(key) + '=' + value;
 }
-
-
-
 
 module.exports = serialize;
