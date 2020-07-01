@@ -22,6 +22,7 @@ const empty_check_hash = (form, exp) =>{
 const boolean_check_hash = (form, exp) =>{
   expect(serialize(form, { hash : true, disabled: true, booleans: true })).toEqual(exp);
  };
+ 
 
 const empty_check =(form, exp) =>{
   expect(serialize(form, { hash : false, disabled: true, empty: true })).toEqual( exp);
@@ -81,7 +82,7 @@ test('single element number', ()=> {
   });
   boolean_check_hash(form, {
     'anummber': 123
-})
+});
 });
 
 test('ignore no value', ()=> {
@@ -155,8 +156,6 @@ test('ignore buttons', ()=> {
   str_check(form, '');
 });
 
-
-
 test('checkboxes', ()=> {
   var form = domify(`<form>
       <input type="checkbox" name="foo" checked/>
@@ -170,9 +169,9 @@ test('checkboxes', ()=> {
   str_check(form, 'foo=on&baz=on');
   empty_check(form, 'foo=on&bar=&baz=on');
   empty_check_hash(form, {
-      'foo': 'on',
-      'bar': '',
-      'baz': 'on'
+      'foo': "on",
+      'bar': "",
+      'baz': "on"
   });
   boolean_check_hash(form, {
     'foo': true,
@@ -195,6 +194,7 @@ test('checkboxes - array', ()=> {
   empty_check_hash(form, {
       'foo': ['bar', 'baz', '']
   });
+
   boolean_check_hash(form, {
     'foo': [true, true, false]
 });
@@ -290,11 +290,10 @@ test('radio - no default', ()=> {
   empty_check(form, 'foo=');
   empty_check_hash(form, {
       'foo':''
-  }); 
- /* boolean_check_hash(form, {
+  });
+  boolean_check_hash(form, {
     'foo':''
-}); 
-*/ 
+});
 });
 
 test('radio - single default', ()=> {
@@ -310,6 +309,7 @@ test('radio - single default', ()=> {
   empty_check_hash(form, {
       foo: 'bar1'
   });
+
   boolean_check_hash(form, {
     foo: 'bar1'
 });
@@ -391,7 +391,6 @@ test('bracket notation - hashes', ()=> {
           }
       }
   });
-
   boolean_check_hash(form, {
     account: {
         name: 'Foo Dude',
@@ -509,15 +508,11 @@ test('bracket notation - select multiple, empty values', ()=> {
       }
   });
 
-  /*
   boolean_check_hash(form, {
     foo: {
         bar: [ 'Default value', '', 'baz', 'norf' ]
     }
 });
-
-*/
-
 });
 
 test('bracket notation - non-indexed arrays', ()=> {
@@ -734,4 +729,3 @@ test('extra4', ()=> {
 str_check(form, 'interest=coding&interest=music');
   
 });
-

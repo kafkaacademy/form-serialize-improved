@@ -10,7 +10,12 @@ The improvements:
 
 2. checkbox input fields are checked against standards: [Mozilla standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
 
-3. 100% coverage in the tests
+3.	serializa with option booleans:true
+	(serialize(form, { hash : true, booleans: true })
+    serialized checkbox input to booleans.
+	This is not according to MDN but serializing to json in Big Data environments expects often boolean's and no strings
+
+4. 100% coverage in the tests
 
 ## install
 

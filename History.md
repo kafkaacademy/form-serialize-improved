@@ -1,3 +1,6 @@
+# 0.8.2 (2020-07-02)
+add options.booleans to force serialize checkbox with booleans
+
 # 0.8.0 (2020-06-15)
 testing added , also against mdn standards
 now JEST is used 

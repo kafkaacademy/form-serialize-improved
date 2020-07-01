@@ -3,13 +3,13 @@
 
 // types which indicate a submit action and are not successful controls
 // these will be ignored
-var k_r_submitter = /^(?:submit|button|image|reset|file)$/i;
+const k_r_submitter = /^(?:submit|button|image|reset|file)$/i;
 
 // node names which could be successful controls
-var k_r_success_contrls = /^(?:input|select|textarea|keygen)/i;
+const k_r_success_contrls = /^(?:input|select|textarea|keygen)/i;
 
 // Matches bracket notation.
-var brackets = /(\[[^\[\]]*\])/g;
+const brackets = /(\[[^\[\]]*\])/g;
 
 // serializes form fields
 // @param form MUST be an HTMLForm element
@@ -30,6 +30,7 @@ function serialize(form, options) {
         options.hash = true;
     }
 
+    let result = (options.hash) ? {} : '';
     const serializer = options.serializer || ((options.hash) ? hash_serializer : str_serialize);
 
     const elements = form && form.elements ? form.elements : [];
@@ -37,9 +38,7 @@ function serialize(form, options) {
     //Object store each radio and set if it's empty or not
     const radio_store = Object.create(null);
 
-    let result = (options.hash) ? {} : '';
-
-    for (const element of elements) {
+    for (let element of elements) {
 
         // ingore disabled fields
         if ((!options.disabled && element.disabled) || !element.name) {
@@ -55,66 +54,45 @@ function serialize(form, options) {
         const type = element.type;
         let val = element.value;
 
-        // If we do not want empty elements
-        if (!(options.empty || options.booleans) && !val)
-            continue;
-
-          
-
         switch (type) {
-            case 'text':  break;
-            case 'textarea':  break;
-            case 'email':  break;
-            case 'select-one':  break;
-            case 'checkbox':          
-                if (options.booleans) {
-                    if (element.indeterminate)
-                        val = undefined;
-                    else
-                        val = (element.checked);
-                    break;
-                }
-            case 'radio':
-             
-                // we can't just use element.value for checkboxes cause some browsers lie to us
-                // they say "on" for value when the box isn't checked
-                if (!element.checked) {
-                    val = undefined;
-                    if (!options.empty) continue;
-                }
-                // for checkbox
-                if (type === 'checkbox' && !element.checked) {
-                    val = '';
-                }
-                // for radio
-                if (type === 'radio') {
-                    if (!radio_store[key] && !element.checked) {
-                        radio_store[key] = false;
-                    }
-                    else if (element.checked) {
-                        radio_store[key] = true;
-                    }
-                    // if options empty is true, continue 
-                    if (val == undefined) {
-                        continue;
-                    }
-                }            
-                break;
-            case 'number': {
+            case 'number':
                 if (val != undefined)
                     val = Number(val);
                 break;
+            case 'checkbox':
+                if (options.booleans) {
+                    val = element.checked;
+                }
+                else {
+                    if (!element.checked) {
+                        val = '';
+                    }
+                }
+                break;
+
+            case 'radio': {
+                if (!radio_store[key] && !element.checked) {
+                    radio_store[key] = false;
+                }
+                else if (element.checked) {
+                    radio_store[key] = true;
+                }
+                if (!element.checked) {
+                    val = undefined;
+                    continue;
+                }
+                break;
             }
 
-            // multi select boxes
             case 'select-multiple': {
-           
+                if (!(options.empty || options.booleans) && !val) {
+                    continue;
+                }
                 val = [];
-
                 const selectOptions = element.options;
                 let isSelectedOptions = false;
                 for (let option of selectOptions) {
-                    const allowedEmpty = options.empty && !option.value;
+                    const allowedEmpty = (options.empty || options.booleans) && !option.value;
                     const hasValue = (option.value || allowedEmpty);
                     if (option.selected && hasValue) {
                         isSelectedOptions = true;
@@ -134,27 +112,26 @@ function serialize(form, options) {
                 }
 
                 // Serialize if no selected options and options.empty is true
-                if (!isSelectedOptions) {
+                if (!isSelectedOptions && (options.empty || options.booleans)) {
                     result = serializer(result, key, '');
                 }
-            }
-            continue;
-           default: console.log(type);
                 continue;
+            }
         }
-
+        if (!(options.empty || options.booleans) && !val) {
+            continue;
+        }
         result = serializer(result, key, val);
     }
 
     // Check for all empty radio buttons and serialize them with key=""
-    if (options.empty) {
+    if (options.empty || options.booleans) {
         for (let key in radio_store) {
             if (!radio_store[key]) {
                 result = serializer(result, key, '');
             }
         }
     }
-
     return result;
 
 
@@ -205,7 +182,6 @@ function serialize(form, options) {
             while ((match = children.exec(string)) !== null) {
                 keys.push(match[1]);
             }
-
             return keys;
         }
 
@@ -263,7 +239,6 @@ function serialize(form, options) {
         }
     }
 
-
     // urlform encoding serializer
     function str_serialize(result, key, value) {
         if (typeof value === 'string') {
@@ -277,5 +252,4 @@ function serialize(form, options) {
         return result + (result ? '&' : '') + encodeURIComponent(key) + '=' + value;
     }
 }
-
 module.exports = serialize;
