@@ -30,16 +30,15 @@ function serialize(form, options) {
         options.hash = true;
     }
 
-    var result = (options.hash) ? {} : '';
-    var serializer = options.serializer || ((options.hash) ? hash_serializer : str_serialize);
+    let result = (options.hash) ? {} : '';
+    const serializer = options.serializer || ((options.hash) ? hash_serializer : str_serialize);
 
-    var elements = form && form.elements ? form.elements : [];
+    const elements = form && form.elements ? form.elements : [];
 
     //Object store each radio and set if it's empty or not
-    var radio_store = Object.create(null);
+    const radio_store = Object.create(null);
 
-    for (var i = 0; i < elements.length; ++i) {
-        var element = elements[i];
+    for (const element of elements) {
 
         // ingore disabled fields
         if ((!options.disabled && element.disabled) || !element.name) {
@@ -51,11 +50,14 @@ function serialize(form, options) {
             continue;
         }
 
-        var key = element.name;
-        var val = element.value;
-        var type = element.type;
+        const key = element.name;
+        const type = element.type;
+        let val = element.value;
+
+        //  switch(expression) {
+
         if (type === 'number' && val != undefined)
-            val = Number(val);     
+            val = Number(val);
 
 
         // we can't just use element.value for checkboxes cause some browsers lie to us
@@ -252,14 +254,14 @@ function hash_serializer(result, key, value) {
 
 // urlform encoding serializer
 function str_serialize(result, key, value) {
-    if( typeof value ==='string'){
-      value = value.replace(/(\r)?\n/g, '\r\n');
-      value = encodeURIComponent(value);
+    if (typeof value === 'string') {
+        value = value.replace(/(\r)?\n/g, '\r\n');
+        value = encodeURIComponent(value);
 
-      // spaces should be '+' rather than '%20'.
-      value = value.replace(/%20/g, '+');
+        // spaces should be '+' rather than '%20'.
+        value = value.replace(/%20/g, '+');
     }
-  
+
     return result + (result ? '&' : '') + encodeURIComponent(key) + '=' + value;
 }
 
