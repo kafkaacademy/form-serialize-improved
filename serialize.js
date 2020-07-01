@@ -132,7 +132,7 @@ function serialize(form, options) {
 
     // Check for all empty radio buttons and serialize them with key=""
     if (options.empty) {
-        for (var key in radio_store) {
+        for (let key in radio_store) {
             if (!radio_store[key]) {
                 result = serializer(result, key, '');
             }
@@ -144,18 +144,18 @@ function serialize(form, options) {
 
     // Object/hash encoding serializer.
     function hash_serializer(result, key, value) {
-        var matches = key.match(brackets);
+        const matches = key.match(brackets);
 
         // Has brackets? Use the recursive assignment function to walk the keys,
         // construct any missing objects in the result tree and make the assignment
         // at the end of the chain.
         if (matches) {
-            var keys = parse_keys(key);
+            const keys = parse_keys(key);
             hash_assign(result, keys, value);
         }
         else {
             // Non bracket notation can make assignments directly.
-            var existing = result[key];
+            const existing = result[key];
 
             // If the value has been assigned already (for instance when a radio and
             // a checkbox have the same name attribute) convert the previous value
@@ -177,10 +177,10 @@ function serialize(form, options) {
         return result;
 
         function parse_keys(string) {
-            var keys = [];
-            var prefix = /^([^\[\]]*)/;
-            var children = new RegExp(brackets);
-            var match = prefix.exec(string);
+            const keys = [];
+            const prefix = /^([^\[\]]*)/;
+            const children = new RegExp(brackets);
+            let match = prefix.exec(string);
 
             if (match[1]) {
                 keys.push(match[1]);
@@ -199,8 +199,8 @@ function serialize(form, options) {
                 return result;
             }
 
-            var key = keys.shift();
-            var between = key.match(/^\[(.+?)\]$/);
+            const key = keys.shift();
+            const between = key.match(/^\[(.+?)\]$/);
 
             if (key === '[]') {
                 result = result || [];
@@ -226,11 +226,11 @@ function serialize(form, options) {
                 result[key] = hash_assign(result[key], keys, value);
             }
             else {
-                var string = between[1];
+                const string = between[1];
                 // +var converts the variable into a number
                 // better than parseInt because it doesn't truncate away trailing
                 // letters and actually fails if whole thing is not a number
-                var index = +string;
+                const index = +string;
 
                 // If the characters between the brackets is not a number it is an
                 // attribute name and can be assigned directly.

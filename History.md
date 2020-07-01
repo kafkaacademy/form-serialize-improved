@@ -2,7 +2,6 @@
 testing added , also against mdn standards
 now JEST is used 
 
-
 # 0.7.3 (2020-06-14)
 * input number field is now number (was a string)
 
