@@ -62,38 +62,35 @@ function serialize(form, options) {
 
         // we can't just use element.value for checkboxes cause some browsers lie to us
         // they say "on" for value when the box isn't checked
-        if ((element.type === 'checkbox' || element.type === 'radio') && !element.checked) {
+        if ((type === 'checkbox' || type === 'radio') && !element.checked) {
             val = undefined;
         }
 
-        // If we want empty elements
-        if (options.empty) {
-            // for checkbox
-            if (element.type === 'checkbox' && !element.checked) {
-                val = '';
-            }
+        // If we do not want empty elements
+        if (!options.empty && (!val)) {
+            continue;
+        }
 
-            // for radio
-            if (element.type === 'radio') {
-                if (!radio_store[element.name] && !element.checked) {
-                    radio_store[element.name] = false;
-                }
-                else if (element.checked) {
-                    radio_store[element.name] = true;
-                }
-            }
+        // for checkbox
+        if (element.type === 'checkbox' && !element.checked) {
+            val = '';
+        }
 
-            // if options empty is true, continue only if its radio
-            if (val == undefined && element.type == 'radio') {
-                continue;
+        // for radio
+        if (element.type === 'radio') {
+            if (!radio_store[key] && !element.checked) {
+                radio_store[key] = false;
+            }
+            else if (element.checked) {
+                radio_store[key] = true;
             }
         }
-        else {
-            // value-less fields are ignored unless options.empty is true
-            if (!val) {
-                continue;
-            }
+
+        // if options empty is true, continue only if its radio
+        if (val == undefined && type == 'radio') {
+            continue;
         }
+
 
         // multi select boxes
         if (element.type === 'select-multiple') {
