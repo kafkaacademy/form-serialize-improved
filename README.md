@@ -27,11 +27,11 @@ The improvements:
 
 2. checkbox input fields are checked against [Mozilla standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
 
-3.	serialize with option booleans:true: 
+3.	serialize with option booleans: true: 
 ```js
 	serialize(form, { hash : true, booleans: true }
 ```
-    this will serialize checkbox input to booleans.
+this will serialize checkbox input to booleans.
 	
 4. 100% coverage in the tests
 
