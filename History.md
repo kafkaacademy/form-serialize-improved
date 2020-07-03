@@ -1,3 +1,6 @@
+# 0.8.3 (2020-07-03)
+README improved
+
 # 0.8.2 (2020-07-02)
 add options.booleans to force serialize checkbox with booleans
 

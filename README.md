@@ -1,6 +1,23 @@
 # form-serialize-improved 
 
-serialize form fields to submit a form 
+Serialize form fields to submit a form 
+
+This serializer serializes default according to the Mozilla (MDN) standards, to JSON.
+
+However, the JSON Schema definition https://json-schema.org/understanding-json-schema/ 
+where Big Data makes use of, has some other requirements.
+
+In order to generate neat JSON for Big Data (like Apache Kafka), there is a big wish to
+let HTML5 forms export data that is more according to the JSON schema definitions.
+
+That's why we adapt the serialization towards these requirements.
+
+So , without specifying options, we adhere to the standards of MDN.
+
+With several options we can adapt the serialization to Big Data needs.
+
+
+
 
 Some improvements compared to [form-serialize](https://www.npmjs.com/package/form-serialize) (forked from there) 
 
@@ -8,13 +25,14 @@ The improvements:
 
 1. number input fields now give a number and not a string
 
-2. checkbox input fields are checked against standards: [Mozilla standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
+2. checkbox input fields are checked against [Mozilla standards](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox)
 
-3.	serializa with option booleans:true
+3.	serialize with option booleans:true: 
+```js
 	(serialize(form, { hash : true, booleans: true })
-    serialized checkbox input to booleans.
-	This is not according to MDN but serializing to json in Big Data environments expects often boolean's and no strings
-
+```
+    this will serialize checkbox input to booleans.
+	
 4. 100% coverage in the tests
 
 ## install
@@ -36,7 +54,7 @@ Lets serialize the following html form:
 ```
 
 ```js
-var serialize = require('form-serialize');
+var serialize = require('form-serialize-improved');
 var form = document.querySelector('#example-form');
 
 var str = serialize(form);
@@ -120,7 +138,7 @@ Like the "[explicit array fields](explicit-array-fields)" this does not affect u
 ```
 
 ```js
-var serialize = require('form-serialize');
+var serialize = require('form-serialize-improved');
 var form = document.querySelector('#todos-form');
 
 var obj = serialize(form, { hash: true });
@@ -145,7 +163,7 @@ Like the "[explicit array fields](explicit-array-fields)" this does not affect u
 ```
 
 ```js
-var serialize = require('form-serialize');
+var serialize = require('form-serialize-improved');
 var form = document.querySelector('#todos-form');
 
 var obj = serialize(form, { hash: true });

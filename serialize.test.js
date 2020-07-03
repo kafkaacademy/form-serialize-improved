@@ -467,8 +467,6 @@ test('bracket notation - select multiple', ()=> {
   });
 });
 
-
-
 test('bracket notation - select multiple, nested', ()=> {
   var form = domify(`<form>
       <select name="foo[bar]" multiple>
