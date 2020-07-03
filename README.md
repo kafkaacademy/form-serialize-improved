@@ -1,6 +1,59 @@
 # form-serialize-improved 
 
-Serialize form fields to submit a form 
+Improvements compared to [form-serialize](https://www.npmjs.com/package/form-serialize) (forked from there) 
+
+This package takes a HTML form as input and makes a json/ json based output 
+of the form's content.
+
+The regular input fields of the form are detected (see MDN) and a nice json object is created.
+
+
+## Arrays of objects
+
+Arrays of fields  are handled if you name the input as in this example.
+
+```html
+<form>
+	<input type="checkbox" name="foo[]" value="bar" checked/>
+	<input type="checkbox" name="foo[]" value="baz" checked/>
+	<input type="checkbox" name="foo[]" value="baz"/>
+</form>
+```
+
+will produce json:
+
+ ```json
+  {
+	  'foo': ['bar', 'baz', '']
+  }
+ ```
+
+## Nested objects :
+
+Nested structures can be handled by giving the fields the right names:
+```html
+<form>
+	<input type="email" name="account[name]" value="Foo Dude">
+	<input type="text" name="account[email]" value="foobar@example.org">
+	<input type="text" name="account[address][city]" value="Qux">
+	<input type="text" name="account[address][state]" value="CA">
+	<input type="text" name="account[address][empty]" value="">
+</form>
+```   
+will produce json :
+
+```json
+account: {
+		name: 'Foo Dude',
+		email: 'foobar@example.org',
+		address: {
+			city: 'Qux',
+			state: 'CA'
+		}
+	}
+```
+
+## MDN standards
 
 This serializer serializes default according to the Mozilla (MDN) standards, to JSON.
 
@@ -19,8 +72,6 @@ With several options we can adapt the serialization to Big Data needs.
 
 
 
-Some improvements compared to [form-serialize](https://www.npmjs.com/package/form-serialize) (forked from there) 
-
 The improvements:
 
 1. number input fields now give a number and not a string
@@ -29,7 +80,9 @@ The improvements:
 
 3.	serialize with option booleans: true: 
 ```js
-	serialize(form, { hash : true, booleans: true }
+
+serialize(form, { hash : true, booleans: true }
+
 ```
 this will serialize checkbox input to booleans.
 	
@@ -38,7 +91,9 @@ this will serialize checkbox input to booleans.
 ## install
 
 ```shell
+
 npm install form-serialize-improved 
+
 ```
 
 ## use
@@ -83,12 +138,13 @@ hash | boolean | false | if `true`, the hash serializer will be used for `serial
 serializer | function | url-encoding | override the default serializer (hash or url-encoding)
 disabled | boolean | false | if `true`, disabled fields will also be serialized
 empty | boolean | false | if `true`, empty fields will also be serialized
+booleans | boolean | false | if `true`, html checkbox fields will serialize as boolean
 
 ### custom serializer
 
 Serializers take 3 arguments: `result`, `key`, `value` and should return a newly updated result.
 
-See the example serializers in the index.js source file.
+See the example serializers in the serialize.test.js source file.
 
 ## notes
 
