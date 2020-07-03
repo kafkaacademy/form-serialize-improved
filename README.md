@@ -29,7 +29,7 @@ The improvements:
 
 3.	serialize with option booleans:true: 
 ```js
-	(serialize(form, { hash : true, booleans: true })
+	serialize(form, { hash : true, booleans: true }
 ```
     this will serialize checkbox input to booleans.
 	
