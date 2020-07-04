@@ -24,7 +24,6 @@
     "url": "https://github.com/Kafka-Academy/form-serialize/issues"
   },
   "devDependencies": {
-    "domify": "^1.4.0",
     "jest": "^26.0.1"
   }
 }

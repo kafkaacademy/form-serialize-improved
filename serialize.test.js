@@ -1,6 +1,24 @@
-const domify = require('domify');
+
 const serialize = require('./serialize');
 
+let formData="";
+
+function domify(html2) {
+    if ('string' != typeof html2) {
+        console.error('String expected');
+        return null;
+    }
+    document.body.innerHTML = "";
+    document.body.innerHTML = html2;
+    const form = document.body.children[0];
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        formData = new FormData(form);      
+    });
+    
+   form.submit();
+   return form;
+}
 
 const hash_check = (form, exp) =>{
   expect(serialize(form, { hash: true })).toEqual(exp);
