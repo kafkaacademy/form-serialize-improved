@@ -23,10 +23,6 @@ const brackets = /(\[[^\[\]]*\])/g;
 //    - disabled: [true | false]. If true serialize disabled fields.
 //    - empty: [true | false]. If true serialize empty fields
 
-function serialize_improved(form,formData,options){
-    return serialize(form, options);
-}
-
 function serialize(form, options) {
     if (typeof options != 'object') {
         options = { hash: !!options };
@@ -260,7 +256,4 @@ function serialize(form, options) {
         return result + (result ? '&' : '') + encodeURIComponent(key) + '=' + value;
     }
 }
-module.exports = {
-    serialize,
-    serialize_improved
- }
+module.exports =  serialize;
