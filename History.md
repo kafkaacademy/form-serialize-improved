@@ -1,3 +1,8 @@
+# 0.8.5 (2020-07-04)
+depency in test domify removed
+so testing with jest is simpler and more future proof
+This is a preparation to also add formdata.
+
 # 0.8.4 (2020-07-03)
 README more improved
 
