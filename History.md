@@ -1,3 +1,8 @@
+# 0.8.6 (2020-07-04)
+const serialize = require('form-serialize-improved');
+import serialize from 'form-serialize-improved';
+repaired
+
 # 0.8.5 (2020-07-04)
 depency in test domify removed
 so testing with jest is simpler and more future proof

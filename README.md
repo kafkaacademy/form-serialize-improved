@@ -109,7 +109,7 @@ Lets serialize the following html form:
 ```
 
 ```js
-var serialize = require('form-serialize-improved');
+const serialize = require('form-serialize-improved');
 var form = document.querySelector('#example-form');
 
 var str = serialize(form);
@@ -168,7 +168,7 @@ This does not affect `url-encoding` mode output in any way.
 ```
 
 ```js
-var serialize = require('form-serialize');
+import serialize from 'form-serialize-improved';
 var form = document.querySelector('#example-form');
 
 var obj = serialize(form, { hash: true });
@@ -177,6 +177,11 @@ var obj = serialize(form, { hash: true });
 var str = serialize(form);
 // str -> "foo[]=bar"
 
+```
+or you can import using:
+
+```
+const serialize=require('form-serialize-improved');
 ```
 
 ### indexed arrays

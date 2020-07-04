@@ -1,5 +1,5 @@
 
-const serialize = require('./serialize');
+const serialize = require('./index');
 
 let formData="";
 
