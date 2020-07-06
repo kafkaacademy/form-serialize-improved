@@ -1,11 +1,8 @@
 {
   "name": "form-serialize-improved",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "description": "serialize html forms",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "test": "jest",
     "coverage": "jest --collect-coverage"
@@ -21,7 +18,7 @@
   "author": "Herbrand Hofker <herbrand@kafka.academy> www.kafka.academy",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Kafka-Academy/form-serialize/issues"
+    "url": "https://github.com/kafkaacademy/form-serialize/issues"
   },
   "devDependencies": {
     "jest": "^26.0.1"
