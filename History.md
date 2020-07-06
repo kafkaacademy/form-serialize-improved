@@ -1,3 +1,6 @@
+# 0.8.7 (2020-07-05)
+package.json updated with right issues url
+
 # 0.8.6 (2020-07-04)
 const serialize = require('form-serialize-improved');
 import serialize from 'form-serialize-improved';
