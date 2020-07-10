@@ -1,6 +1,6 @@
 {
   "name": "form-serialize-improved",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "serialize html forms",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,6 @@
     "url": "https://github.com/kafkaacademy/form-serialize/issues"
   },
   "devDependencies": {
-    "jest": "^26.0.1"
+    "jest": "^26.1.0"
   }
 }
