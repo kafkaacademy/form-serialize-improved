@@ -1,3 +1,8 @@
+# 0.8.8 (2020-07-10)
+option booleans improved: 
+const str = serialize(form, { hash : true, booleans: true });
+if an input of type checkbox has state  indeterminate = true (see MDN) , null is produced in the json;
+
 # 0.8.7 (2020-07-05)
 package.json updated with right issues url
 

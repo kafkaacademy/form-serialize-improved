@@ -141,6 +141,12 @@ disabled | boolean | false | if `true`, disabled fields will also be serialized
 empty | boolean | false | if `true`, empty fields will also be serialized
 booleans | boolean | false | if `true`, html checkbox fields will serialize as boolean
 
+More on option "booleans": 
+const str = serialize(form, { hash : true, booleans: true });
+if an input of type checkbox has state  indeterminate = true (see MDN) , null is produced in the json;
+( indeterminate can only be set by javascript in the HTMLInputElement)
+
+
 ### custom serializer
 
 Serializers take 3 arguments: `result`, `key`, `value` and should return a newly updated result.
