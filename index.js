@@ -63,7 +63,7 @@ function serialize(form, options) {
             case 'checkbox':
                 if (options.booleans) {
                     if (element.indeterminate)
-                        val=undefined;         
+                        val=null;         
                     else                    
                     val = element.checked;
                 }
